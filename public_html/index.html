@@ -15,6 +15,8 @@ href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script
+src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
 </head>
 <body>
 <div class="container">
@@ -68,33 +70,7 @@ empEmail: empEmailVar,
 return JSON.stringify(jsonStrObj);
 }
 // This method is used to create PUT Json request.
-function createPUTRequest(connToken, jsonObj, dbName, relName) {
-var putRequest = "{\n"
-+ "\"token\" : \""
-+ connToken
-+ "\","
-+ "\"dbName\": \""
-+ dbName
-+ "\",\n" + "\"cmd\" : \"PUT\",\n"
-+ "\"rel\" : \""
-+ relName + "\","
-+ "\"jsonStr\": \n"
-+ jsonObj
-+ "\n"
-+ "}";
-return putRequest;
-}
-function executeCommand(reqString, dbBaseUrl, apiEndPointUrl) {
-var url = dbBaseUrl + apiEndPointUrl;
-var jsonObj;
-$.post(url, reqString, function (result) {
-jsonObj = JSON.parse(result);
-}).fail(function (result) {
-var dataJsonObj = result.responseText;
-jsonObj = JSON.parse(dataJsonObj);
-});
-return jsonObj;
-}
+
 
 function resetForm() {
 $("#empId").val("")
@@ -111,7 +87,7 @@ var putReqStr = createPUTRequest("90936861|-31948784479254024|90932362",
 jsonStr, "SAMPLE", "EMP-REL");
 alert(putReqStr);
 jQuery.ajaxSetup({async: false});
-var resultObj = executeCommand(putReqStr,
+var resultObj = executeCommandAtGivenBaseUrl(putReqStr,
 "http://api.login2explore.com:5577", "/api/iml");
 alert(JSON.stringify(resultObj));
 jQuery.ajaxSetup({async: true});
